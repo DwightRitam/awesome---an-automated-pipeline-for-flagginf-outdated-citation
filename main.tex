@@ -1,0 +1,973 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{multirow}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\textbf{An Automated Pipeline for Flagging Outdated Citations in
+AI-Recommended Literature: A Comprehensive Review}
+
+\begin{quote}
+RITAM SANTRA, Indian Institute of Information Technology Allahabad,
+India
+
+The rapid integration of Large Language Models (LLMs) and
+Retrieval-Augmented Generation (RAG) in academic research workflows has
+introduced critical vulnerabilities regarding the provenance, accuracy,
+and temporal validity of cited literature. This comprehensive survey
+systematically evaluates automated compu-tational pipelines designed to
+verify AI-generated references. We propose an extended,
+multi-dimensional taxonomy that categorizes existing architectures into
+metadata-matching heuristics, temporal graph-mining networks, and
+multi-agent verification frameworks. By critically analyzing the
+structural methodologies, mathematical formulations, and dataset
+dependencies of these systems, we trace the paradigm shift from basic
+lexical string-matching to deep semantic entailment via Natural Language
+Inference (NLI). Furthermore, this review conducts a rigorous
+comparative analysis of current frameworks against computational
+bottlenecks, particularly API latency, dynamic graph update frequencies,
+and paywalled knowledge enclosures. Finally, we outline a roadmap for
+future research, emphasizing the development of localized Small Language
+Model (SLM) infrastructures and heuristic models capable of detecting
+softly superseded scientific methodologies.
+\end{quote}
+
+Additional Key Words and Phrases: Citation Verification, LLM
+Hallucinations, Retrieval-Augmented Generation, Temporal Graph Networks,
+Agentic Workflows, Semantic Fidelity, Natural Language Inference,
+Scientometrics
+
+\begin{quote}
+\textbf{ACM Reference Format:}\\
+Ritam Santra. 2026. An Automated Pipeline for Flagging Outdated
+Citations in AI-Recommended Literature: A Comprehensive Review. 1, 1
+(September 2026), 8 pages.
+
+\textbf{1} \textbf{Introduction}
+
+The landscape of scientific research is undergoing a fundamental
+transformation driven by the advent of Generative Artificial
+Intelligence (GenAI). Large Language Models (LLMs), such as OpenAI's
+GPT-4, Anthropic's Claude, and open-weight models like LLaMA, serve as
+powerful cognitive amplifiers. They enable researchers to rapidly
+synthesize vast corpora of literature, draft academic manuscripts, and
+discover cross-disciplinary connections that might otherwise remain
+hidden. However, the foundational probabilistic architecture of these
+models---which generate text by predicting statistically likely token
+sequences rather than retrieving discrete, verified facts---inherently
+leads to the generation of plausible but factually incorrect outputs
+{[}\textbf{?} {]}. In academic contexts, this phenomenon manifests
+dangerously as citation hallucinations.
+
+Citation anomalies in AI-generated texts generally fall into three
+distinct categories:
+
+(1) \textbf{Complete Fabrication:} The authors, title, and venue are
+entirely invented by the model, often blending recognizable names in the
+field into a highly plausible but non-existent reference.
+
+(2) \textbf{Entity Swapping:} Real authors are misattributed to real but
+unrelated papers, or the DOI points to a completely different
+manuscript.
+
+Author's Contact Information: Ritam Santra, Indian Institute of
+Information Technology Allahabad, Prayagraj, Uttar Pradesh, India.
+
+Permission to make digital or hard copies of all or part of this work
+for personal or classroom use is granted without fee provided that
+copies are not made or distributed for profit or commercial advantage
+and that copies bear this notice and the full citation on the first
+page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy
+otherwise, or republish, to post on servers or to redistribute to lists,
+requires prior specific permission and/or a fee. Request permissions
+from permissions@acm.org.
+\end{quote}
+
+© 2026 Copyright held by the owner/author(s). Publication rights
+licensed to ACM.
+
+\begin{quote}
+ACM XXXX-XXXX/2026/9-ART
+\end{quote}
+
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+\begin{quote}
+2 Ritam Santra
+
+(3) \textbf{Contextual Misalignment (Semantic Infidelity):} A genuine
+paper is cited accurately with correct metadata, but the underlying text
+of the paper does not support the specific claim generated by the LLM
+{[}\textbf{?} {]}.
+
+Even when LLMs are grounded using external knowledge bases via
+Retrieval-Augmented Gener-ation (RAG) architectures, they frequently
+retrieve and cite chronologically outdated or formally retracted
+literature {[}\textbf{?} {]}. If a RAG system prioritizes dense vector
+similarity over temporal metadata, it may cite a retracted study or a
+methodology that has been universally superseded by the broader
+scientific community.
+
+The manual auditing of AI-generated bibliographies is a highly
+resource-intensive bottleneck, often negating the efficiency gains
+promised by AI assistance. Consequently, the development of robust,
+automated computational pipelines to verify, contextualize, and flag
+problematic citations has emerged as a critical imperative at the
+intersection of Natural Language Processing (NLP) and computational
+scientometrics.
+
+\textbf{1.1} \textbf{Research Objectives and Contributions}
+\end{quote}
+
+This survey systematically analyzes the state-of-the-art in automated
+citation verification. We investigate the core research question:
+\emph{How can automated computational pipelines effectively verify,}
+
+\emph{contextualize, and flag hallucinated, retracted, or
+chronologically outdated citations generated by large}
+
+\begin{quote}
+\emph{language models?}
+
+The primary contributions of this review are:
+
+• A formalization of the citation hallucination problem, distinguishing
+between parametric knowledge decay and semantic misalignment.
+
+• A comprehensive, three-tier taxonomy of verification pipelines,
+categorized into metadata, graph-based, and agentic approaches.
+
+• A detailed analysis of the algorithmic frameworks powering these
+systems, including Graph Neural Networks (GNNs) and Natural Language
+Inference (NLI) models.\\
+• A critical evaluation of current systemic bottlenecks, focusing on API
+latency, metric limita-tions, and paywalled literature.
+
+The remainder of this paper is structured as follows. Section 2
+establishes the theoretical back-ground of LLM hallucinations and
+formalizes the problem. Section 3 examines Tier 1 metadata and lexical
+matching frameworks. Section 4 delves into Tier 2 topological and
+temporal graph-mining approaches. Section 5 explores the frontier of
+Tier 3 agentic verification and semantic fidelity. Section 6 outlines
+evaluation metrics and benchmarking. Section 7 details open research
+challenges, and Section 8 concludes the review.
+
+\textbf{2} \textbf{Background and Problem Formalization}
+
+\textbf{2.1} \textbf{The Anatomy of RAG Failures}
+\end{quote}
+
+To understand the necessity of automated verification pipelines, one
+must examine the fundamental failure modes of Retrieval-Augmented
+Generation (RAG). A standard RAG pipeline embeds a user query \emph{𝑞},
+retrieves the top-\emph{𝑘}most similar document chunks \emph{𝐷}=
+\{\emph{𝑑}1\emph{,𝑑}2\emph{, ...,𝑑𝑘}\} from a vector database using a
+retriever function R, and prepends them to the LLM's context window to
+generate a response \emph{𝑦}:\\
+\emph{𝑦}= LLM(\emph{𝑞,} R(\emph{𝑞,𝑘})) (1)
+
+However, semantic similarity in the dense embedding space does not
+equate to scientific consen-sus or temporal validity {[}\textbf{?} {]}.
+For example, if a query asks for "state-of-the-art image
+classification," a standard RAG system might retrieve a highly cited
+paper on Convolutional Neural Networks (CNNs) from 2015, ignoring a more
+recent but less cited paper on Vision Transformers (ViTs). The
+
+\begin{quote}
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+An Automated Pipeline for Flagging Outdated Citations in AI-Recommended
+Literature: A Comprehensive Review 3
+
+LLM will then confidently cite the outdated 2015 paper. This is not a
+hallucination of the text itself, but a hallucination of the
+\emph{current scientific consensus}.
+
+\textbf{2.2} \textbf{Formalizing Knowledge Decay and Semantic Drift}
+\end{quote}
+
+We can formalize the temporal validity of a cited fact. Let
+K\emph{𝑡}represent the globally accepted scientific knowledge graph at
+time \emph{𝑡}. A generated claim \emph{𝑐}based on a document
+\emph{𝑑}published at time\emph{𝑡𝑑}is valid if and only if:
+
+\begin{quote}
+\emph{𝑐}\textbar= K\emph{𝑡𝑐𝑢𝑟𝑟}where \emph{𝑡𝑑}≤\emph{𝑡𝑐𝑢𝑟𝑟}(2)
+\end{quote}
+
+Automated pipelines must bridge the gap between \emph{𝑡𝑑}and
+\emph{𝑡𝑐𝑢𝑟𝑟}. Semantic drift occurs when a claim \emph{𝑐}was valid in
+K\emph{𝑡𝑑}but has been falsified or superseded in K\emph{𝑡𝑐𝑢𝑟𝑟}.
+
+\begin{quote}
+\textbf{2.3} \textbf{A Comprehensive Taxonomy}
+\end{quote}
+
+We propose an extended taxonomy that categorizes automated verification
+pipelines into three primary architectural tiers, moving from structural
+validation to deep semantic reasoning:
+
+\begin{quote}
+(1) \textbf{Tier 1: Metadata-Centric (Lexical) Approaches:} Systems
+relying on exact or fuzzy match- ing of citation strings against
+established indexing APIs (e.g., Crossref, OpenAlex).
+
+(2) \textbf{Tier 2: Topological and Graph-Mining Approaches:} Systems
+that map the citation network as a Directed Acyclic Graph (DAG) to
+verify logical existence, temporal relevance, and community centrality.
+
+(3) \textbf{Tier 3: Agentic and LLM-in-the-Loop Approaches:} Systems
+that deploy secondary LLM agents to semantically read and verify the
+source text against the generated claim using NLI.
+
+\textbf{3} \textbf{Tier 1: Metadata and Lexical Matching Frameworks}
+
+The foundational layer of automated verification relies on metadata
+matching. These pipelines extract the raw citation string from the LLM
+output and attempt to resolve it against external databases.
+
+\textbf{3.1} \textbf{Citation Parsing and Extraction}
+
+Before verification can occur, the pipeline must accurately segment the
+generated text. Tools like GROBID (GeneRation Of BIbliographic Data)
+utilize Conditional Random Fields (CRF) and, more recently, deep
+learning sequence-to-sequence models to parse raw citation strings into
+structured JSON objects containing fields like \emph{author},
+\emph{title}, \emph{journal}, and \emph{year}.
+
+\textbf{3.2} \textbf{String Similarity and Fuzzy Matching}
+\end{quote}
+
+Wang et al. {[}\textbf{?} {]} formalized the metadata matching approach
+in \emph{RefChecker}. Once parsed, the pipeline queries an API (like
+Crossref) using the title. The core of lexical matching relies on
+calculating string similarities between the generated citation
+\emph{𝐶𝑔𝑒𝑛}and the retrieved database record \emph{𝐶𝑑𝑏}. Common metrics
+include Jaccard similarity:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{𝐽}(\emph{𝐶𝑔𝑒𝑛,𝐶𝑑𝑏}) =\textbar{}\emph{𝐶𝑔𝑒𝑛}∩\emph{𝐶𝑑𝑏}\textbar{}
+\textbar{}\emph{𝐶𝑔𝑒𝑛}∪\emph{𝐶𝑑𝑏}\textbar{} (3)
+
+To handle character-level noise and hallucinated middle initials
+generated by LLMs, the Leven-
+
+shtein distance \emph{𝑙𝑒𝑣}(\emph{𝑎,𝑏}) is often normalized into a
+similarity score:
+
+\emph{𝑆𝑖𝑚𝑙𝑒𝑣}(\emph{𝐶𝑔𝑒𝑛,𝐶𝑑𝑏}) = 1
+−max(\textbar{}\emph{𝐶𝑔𝑒𝑛}\textbar{}\emph{,}
+\textbar{}\emph{𝐶𝑑𝑏}\textbar) \emph{𝑙𝑒𝑣}(\emph{𝐶𝑔𝑒𝑛,𝐶𝑑𝑏}) (4)
+\end{quote}
+
+If \emph{𝑆𝑖𝑚𝑙𝑒𝑣}≥\emph{𝜏}(where \emph{𝜏}is a strict threshold, typically
+0\emph{.}85), the citation is deemed structurally valid.
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+4
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ritam Santra
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+Fig. 1. Comprehensive Taxonomy and Workflow Architecture of Tier 1, Tier
+2, and Tier 3 Citation Verification
+
+Pipelines. The diagram illustrates the data flow from claim generation
+to metadata parsing, graph traversal,
+
+\begin{quote}
+and final semantic entailment.
+
+\textbf{3.3} \textbf{Limitations of Tier 1}
+\end{quote}
+
+While computationally inexpensive (requiring only milliseconds per
+citation) and highly scalable, metadata matching is inherently brittle.
+It successfully identifies completely fabricated citations but fails
+catastrophically at identifying Contextual Misalignment. A Tier 1 system
+will verify a citation as perfectly accurate as long as the paper exists
+in the database, regardless of whether the paper actually supports the
+LLM's claim.
+
+\begin{quote}
+\textbf{4} \textbf{Tier 2: Topological and Temporal Graph Networks}
+
+To move beyond structural existence, Tier 2 frameworks model academic
+literature as complex networks. Let G = (\emph{𝑉, 𝐸}) be a directed
+citation graph where \emph{𝑉}is the set of papers and \emph{𝐸}is the set
+of directed edges (citations).
+
+\textbf{4.1} \textbf{Detecting Anomalous Citations via GNNs}
+
+Zhang and Shi {[}\textbf{?} {]} demonstrated that hallucinated citations
+exhibit highly anomalous topological features. Real citations form
+localized, dense clusters within specific sub-disciplines. If an LLM
+hallucinates a connection between a paper in quantum mechanics and a
+paper in medieval history, the shortest path \emph{𝑑}(\emph{𝑢, 𝑣}) in
+the citation graph will be abnormally large.
+\end{quote}
+
+edge existing based on structural node similarity. Using Graph
+Convolutional Networks (GCN), the Tier 2 pipelines utilize Graph Neural
+Networks (GNNs) to calculate the probability \emph{𝑃}(\emph{𝑒𝑢,𝑣}) of an
+
+\begin{quote}
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+An Automated Pipeline for Flagging Outdated Citations in AI-Recommended
+Literature: A Comprehensive Review 5
+
+node embeddings H(\emph{𝑙})at layer \emph{𝑙}are updated as:
+\end{quote}
+
+where˜A is the adjacency matrix with added
+self-connections,˜H(\emph{𝑙}+1)= \emph{𝜎}(︂D−1 2 ˜A˜D−1 2
+H(\emph{𝑙})W(\emph{𝑙}))︂D is the degree matrix, and W is the (5)
+
+\begin{quote}
+learned weight matrix. Citations generated by the LLM that result in a
+predicted edge probability\emph{𝑃}(\emph{𝑒𝑢,𝑣}) \emph{\textless{} 𝜖}are
+flagged as likely hallucinations for human review.
+
+\textbf{4.2} \textbf{Temporal Decay and Outdated Literature}
+
+Flagging outdated citations requires incorporating continuous temporal
+dynamics into the graph. Kim and Park {[}\textbf{?} {]} introduced the
+LAGMiD framework, which utilizes a temporal decay function. The ongoing
+relevance \emph{𝑅}of a cited paper \emph{𝑣}at the current evaluation
+time \emph{𝑡𝑐𝑢𝑟𝑟}is formulated as:
+
+\emph{𝑅}(\emph{𝑣,𝑡𝑐𝑢𝑟𝑟}) = PageRank(\emph{𝑣,} G) · exp
+(−\emph{𝜆}(\emph{𝑡𝑐𝑢𝑟𝑟}−\emph{𝑡𝑣})) (6)
+
+where\emph{𝑡𝑣}is the publication year of the paper and \emph{𝜆}is a
+domain-specific decay constant (e.g., computer science literature decays
+faster than mathematics literature).
+
+\textbf{Algorithm 1} LAGMiD Temporal Graph Verification Algorithm
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{1.0000} + 2\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Require:} Set of generated citations \emph{𝐶𝑔𝑒𝑛}, Citation Graph
+G = (\emph{𝑉, 𝐸}), Current Year \emph{𝑡𝑐𝑢𝑟𝑟}, Decay threshold \emph{𝜃}
+
+\begin{quote}
+\textbf{Ensure:} Set of flagged outdated citations \emph{𝐹𝑜𝑢𝑡𝑑𝑎𝑡𝑒𝑑}
+
+1: \emph{𝐹𝑜𝑢𝑡𝑑𝑎𝑡𝑒𝑑}←∅\\
+2: \textbf{for} each \emph{𝑐}∈\emph{𝐶𝑔𝑒𝑛}\textbf{do} 3:
+
+4:\emph{𝑣}←MatchNode(\emph{𝑐,} G) \textbf{if} \emph{𝑣}== NULL
+\textbf{then}
+
+5: Flag \emph{𝑐}as Fabricated
+\end{quote}\strut
+\end{minipage}} \\
+\midrule()
+\endhead
+6: 7: 8: 9: 10: & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{end if}
+
+\emph{𝑃𝑅𝑣}←CalculatePageRank(\emph{𝑣,} G)\\
+\emph{𝑡𝑣}←GetPublicationYear(\emph{𝑣})\\
+\emph{𝑅𝑣}←\emph{𝑃𝑅𝑣}· exp(−\emph{𝜆}(\emph{𝑡𝑐𝑢𝑟𝑟}−\emph{𝑡𝑣})) \textbf{if}
+\emph{𝑅𝑣\textless{} 𝜃}\textbf{then}
+\end{quote}\strut
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{1.0000} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+11: 12: \textbf{end if}\emph{𝐹𝑜𝑢𝑡𝑑𝑎𝑡𝑒𝑑}←\emph{𝐹𝑜𝑢𝑡𝑑𝑎𝑡𝑒𝑑}∪\{\emph{𝑐}\}
+
+13: \textbf{end for}\\
+14: \textbf{return} \emph{𝐹𝑜𝑢𝑡𝑑𝑎𝑡𝑒𝑑}
+\end{quote}\strut
+\end{minipage}} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{5}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Tier 3: Agentic Verification and Semantic Fidelity}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+The vanguard of citation verification relies on multi-agent
+architectures that simulate human peer-review. Tier 3 systems fetch the
+source document and computationally "read" it to ensure it semantically
+entails the generated claim.
+
+\textbf{5.1} \textbf{Natural Language Inference (NLI) Modeling}
+
+Gupta et al. {[}\textbf{?} {]} established the Semantic Fidelity (SemFi)
+pipeline, framing verification as an NLI classification task. Given an
+LLM-generated claim \emph{𝑐}and the retrieved abstract or full-text of
+the cited document \emph{𝑑}, a cross-encoder model (e.g., RoBERTa or
+DeBERTa) computes the probability of entailment.
+\end{quote}
+
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+\begin{quote}
+6 Ritam Santra
+
+The input is formatted as `{[}CLS{]} claim {[}SEP{]} document
+{[}SEP{]}`, and the pooled output is passed through a Multi-Layer
+Perceptron (MLP):
+
+\emph{𝑃}(Class \textbar{} \emph{𝑐,𝑑}) = Softmax(MLP(E\emph{𝐶𝐿𝑆})) (7)
+\end{quote}
+
+The output classifies the relationship as \emph{Entailment} (valid
+citation, the document supports the claim), \emph{Neutral} (tangential
+citation, the document mentions the topic but does not prove the claim),
+or \emph{Contradiction} (hallucinated citation, the document refutes the
+claim).
+
+\begin{quote}
+\textbf{5.2} \textbf{Iterative Reflection (ReAct) Workflows}
+
+Li et al. {[}\textbf{?} {]} expanded NLI into an autonomous agentic
+framework using the ReAct (Reasoning and Acting) prompting paradigm
+{[}\textbf{?} {]}. In the BibAgent system, if the agent determines the
+cited paper does not support the claim (a \emph{Contradiction} or
+\emph{Neutral} score), it does not merely flag the error. Instead, it
+enters an autonomous reflection loop.
+
+The agent formulates a new search query based on the unsupported claim,
+queries the Semantic Scholar API, downloads candidate abstracts, and
+evaluates them sequentially until a valid paper is found that
+\emph{does} entail the claim. It then silently replaces the LLM's
+hallucinated citation with the correct, verified citation before
+presenting the final manuscript to the user.
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+Fig. 2. The iterative ReAct loop of an Agentic Verification system. The
+agent oscillates between reasoning
+
+\begin{quote}
+about entailment and acting upon search APIs until a valid citation is
+secured.
+
+\textbf{6} \textbf{Evaluation Metrics and Benchmarking}
+
+Evaluating the efficacy of automated verification pipelines requires
+specialized metrics beyond standard NLP benchmarks. Current literature
+relies on a combination of classification accuracy and operational
+efficiency.
+
+\textbf{6.1} \textbf{Classification Metrics}
+
+For detecting fabricated and outdated citations, systems are evaluated
+on standard Precision, Recall, and F1 scores against manually annotated
+datasets (such as the HaluEval-Sci benchmark).
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Precision =
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{𝑇𝑃}\\
+\emph{𝑇𝑃}+ \emph{𝐹𝑃,}
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Recall =
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{𝑇𝑃}\\
+\emph{𝑇𝑃}+ \emph{𝐹𝑁,}
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{𝐹}1 = 2 ·Precision · Recall Precision + Recall
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(8)
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+An Automated Pipeline for Flagging Outdated Citations in AI-Recommended
+Literature: A Comprehensive Review 7
+\end{quote}
+
+Where True Positives (\emph{𝑇𝑃}) represent successfully flagged
+hallucinations or outdated references.
+
+\begin{quote}
+\textbf{6.2} \textbf{Operational Metrics (Latency)}
+
+A critical metric for Tier 3 systems is End-to-End Latency
+(L\emph{𝑒}2\emph{𝑒}). If an LLM generates a document with
+\emph{𝑁}citations, the total verification time is bounded by the network
+latency of the API calls (\emph{𝑡𝑎𝑝𝑖}) and the inference time of the NLI
+model (\emph{𝑡𝑖𝑛𝑓}):
+
+where \emph{𝑘}is the number of iterative reflection loops required per
+citation. L\emph{𝑒}2\emph{𝑒}=∑︁(︁\emph{𝑘}· \emph{𝑡𝑎𝑝𝑖}+
+\emph{𝑡𝑖𝑛𝑓}(\textbar{}\emph{𝑑𝑖}\textbar))︁ (9)
+\end{quote}
+
+Table 1. Comprehensive Evaluation and Comparative Analysis of Automated
+Citation Verification Pipelines
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}@{}}
+\toprule()
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Framework}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Architecture}
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Target API}
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Latency (}L\textbf{\_}\emph{𝑒}2\emph{𝑒}\textbf{)}\\
+Very\\
+(\emph{\textless{}}1s)
+\end{quote}\strut
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Key Capabilities}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Critical Limitations}
+\end{quote}
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+RefChecker {[}\textbf{?} {]}
+\end{quote}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Tier 1 (Lexical)
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Crossref
+\end{quote}
+\end{minipage}} & & \begin{minipage}[b]{\linewidth}\raggedright
+Low
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Highly scalable; reliably detects complete fabrica-tions.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Fails entirely on seman-tic contextual errors; high false positive rate
+on preprints.
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+LAGMiD {[}\textbf{?} {]}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Tier 2 (Topologi-cal)
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+S2AG Graphs
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Medium\\
+(2-5s)
+\end{quote}\strut
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Effectively maps chronologies and flags outdated work using decay
+functions.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Computationally expen-sive to update the dy-namic graph in real-time.
+\end{quote}
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+sciwrite-lint {[}\textbf{?} {]}
+\end{quote}
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+Tier\\
+RAG)\strut
+\end{minipage} & 2 & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(Local
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PubMed ArXiv
+\end{quote}
+\end{minipage} & / &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Low (1-2s)
+\end{quote}
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Ensures data privacy; high throughput for local checking without API
+rate limits.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Constrained by local
+
+hardware memory;
+
+limited disciplinary
+
+scope.
+\end{quote}
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+BibAgent {[}\textbf{?} {]}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+Tier 3 (Agentic)} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+OpenAlex
+\end{quote}
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Very\\
+(\emph{\textgreater{}}30s)
+\end{quote}\strut
+\end{minipage} & High & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+High accuracy in deep se-mantic traceability; self-corrects
+hallucinations automatically.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Severe API latency dur-ing the agent's iterative reflection loops breaks
+real-time UX.
+\end{quote}
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+RetractDet {[}\textbf{?} {]}
+\end{quote}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Tier 1 (Filter)
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Retraction Watch
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Low (\emph{\textless{}}1s)
+\end{quote}
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Instantly eliminates for-mally retracted and dan-gerous sources from
+gen-eration.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Highly dependent on ex-ternal database update frequencies and manual
+flagging.
+\end{quote}
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+SemFi {[}\textbf{?} {]}
+\end{quote}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Tier 3 (NLI)
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Custom Cor-pus
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+High (10-15s)} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Solves contextual hallu-cination via robust cross-encoder entailment
+mod-eling.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Struggles with highly complex mathematical equations or domain-specific
+jargon in the full text.
+\end{quote}
+\end{minipage} \\
+\textbf{7} &
+\multicolumn{8}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.7273} + 14\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Research Gaps and Open Challenges}
+\end{quote}
+\end{minipage}} & & \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+Despite rapid architectural innovations, several critical bottlenecks
+prevent these pipelines from achieving seamless integration into
+everyday academic drafting workflows.
+
+\textbf{7.1} \textbf{The API Latency and Rate-Limit Bottleneck}
+
+As identified by O'Connor {[}\textbf{?} {]}, real-time verification is
+currently paralyzed by API rate limits. When a generative model produces
+a comprehensive literature review containing 50 to 100 citations, a Tier
+3 agentic framework like BibAgent must execute hundreds of sequential
+API calls to fetch metadata, download full-text abstracts, embed the
+documents, and run NLI inference. This cascading
+\end{quote}
+
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+
+\begin{quote}
+8 Ritam Santra
+
+requirement results in processing times that can exceed ten minutes per
+document, effectively breaking the real-time, interactive user
+experience researchers expect from AI tools.
+
+\textbf{7.2} \textbf{The Nuance of "Softly" Outdated Literature}
+
+Current pipelines excel at identifying binary states: a paper is either
+real or fabricated, formally retracted or active. However, academic
+obsolescence is rarely binary; it exists on a continuous gradient. A
+paper from 2017 detailing an NLP methodology using LSTMs is not
+retracted, but it has been scientifically superseded by
+Transformer-based architectures. Current graph-mining approaches (such
+as Equation 6) rely on rigid mathematical decay, failing to capture the
+semantic nuance of paradigm shifts. Developing heuristic models that can
+read the context of a citation (e.g., citing an LSTM paper for
+historical context vs. citing it as the current state-of-the-art
+methodology) remains a significant open challenge.
+
+\textbf{7.3} \textbf{Paywalled Knowledge Enclosures}
+\end{quote}
+
+Tier 3 agentic verification strictly requires access to the full text of
+a paper to verify deep semantic fidelity. However, a significant portion
+of high-impact academic literature remains locked behind publisher
+paywalls. Consequently, verification pipelines are forced to fall back
+on analyzing publicly available abstracts. Because abstracts often omit
+granular methodological details, dataset specifics, and nuanced
+limitations, agentic models frequently trigger false negatives, assuming
+a citation is hallucinated simply because the supporting evidence was
+buried in the inaccessible full-text methodology section.
+
+\begin{quote}
+\textbf{7.4} \textbf{Multimodal and Data-Driven Citations}
+
+Current verification frameworks are entirely text-centric. However,
+modern scientific discourse increasingly relies on multimodal citations,
+where claims are based on specific figures, data tables, or open-source
+repositories linked within a paper. An LLM might correctly cite a paper
+but misinterpret a chart within that paper, generating a false claim.
+Extending NLI models to parse multimodal PDFs and verify data-centric
+claims represents a largely unexplored frontier in computational
+scientometrics.
+
+\textbf{8} \textbf{Conclusion}
+\end{quote}
+
+The automated verification of AI-generated citations is an urgent
+imperative for preserving the integrity of the scientific record in the
+era of Generative AI. This survey has charted the rapid evolution of
+verification pipelines from basic metadata string-matching (Tier 1) to
+topological graph mapping (Tier 2) and sophisticated, LLM-driven
+semantic entailment (Tier 3).
+
+\begin{quote}
+While tools like RefChecker established a scalable baseline, they are
+insufficient for catching con-textual hallucinations. Conversely,
+frameworks like BibAgent and SemFi offer remarkable accuracy but are
+severely hampered by API latency and paywalled text restrictions. Future
+research must prioritize bridging the gap between deep semantic
+verification and computational efficiency. The development of localized,
+lightweight Small Language Models (SLMs) that operate on compressed,
+open-access vector indices will be crucial. Furthermore, integrating
+context-aware temporal dy-namics---allowing pipelines to intelligently
+differentiate between foundational historical citations and superseded
+obsolete methodologies---will define the next generation of automated
+academic auditing.
+
+\textbf{References}
+
+, Vol. 1, No. 1, Article . Publication date: September 2026.
+\end{quote}
+
+\end{document}
