@@ -1,0 +1,8 @@
+{
+ "research_question":"Does reciprocal rank fusion of TF-IDF and BM25 improve SciFact evidence-document retrieval compared to either retriever alone?",
+ "dataset":"SciFact official corpus.jsonl plus annotated claims_dev.jsonl",
+ "primary_metric":"Hit@5", "secondary_metrics":["Hit@1","Hit@3","Hit@10","MRR","median query runtime ms"],
+ "controls":["TF-IDF unigram+bigram cosine similarity","BM25 k1=1.5 b=0.75"],
+ "proposed":"Reciprocal rank fusion RRF k=60", "seeds":[42],
+ "evaluation_unit":"SciFact claim with >=1 annotated evidence document", "split":"dev; no tuning", "gold":"evidence doc_ids", "status":"PROTOCOL PREPARED; no full SciFact run"
+}
