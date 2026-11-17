@@ -1,0 +1,4 @@
+# Data acquisition (not bundled)
+Official source: https://github.com/allenai/scifact (Wadden et al., 2020). Use its documented `./script/download-data.sh` or official release tarball; inspect script and dataset license before running. Place the downloaded `corpus.jsonl` and **labeled** `claims_dev.jsonl` in this directory. The official **test labels are not public for local evaluation**; use dev for the pre-declared demonstration protocol. Do not redistribute dataset files without checking its license and any third-party restrictions.
+
+A user must actually run Colab download; network DNS from the current workspace does not reach GitHub/S3. Verify checksums, exact release and download date after access. This README is not evidence of successful download.
